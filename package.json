@@ -1,0 +1,20 @@
+{
+  "name": "singing",
+  "version": "1.0.0",
+  "description": "My app for song and lyrics.",
+  "main": "index.js",
+  "scripts": {
+    "css-compile": "node-sass static/scss -o static/css",
+    "css-watch": "node-sass static/scss -o static/css --watch",
+    "browser-sync": "browser-sync start --files \"static/css/*.css, static/js/*.js, **/*.py, templates/**/*.html\" --proxy 127.0.0.1:8000 --reload-delay=300 --reload-debounce=500",
+    "start": "concurrently --kill-others \"npm run css-watch\" \"python manage.py runserver\" \"npm run browser-sync\" "
+  },
+  "author": "Sando",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^2.26.13",
+    "bulma": "^0.9.1",
+    "concurrently": "^5.3.0",
+    "node-sass": "^5.0.0"
+  }
+}
