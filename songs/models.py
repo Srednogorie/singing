@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
+from embed_video.fields import EmbedVideoField
 
 from .managers import CustomUserManager
 
@@ -22,3 +23,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Song(models.Model):
+    name = models.CharField(max_length=200)
+    lyrics = models.TextField()
+    video = EmbedVideoField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    likes = models.IntegerField(default=0)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

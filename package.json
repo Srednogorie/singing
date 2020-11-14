@@ -7,7 +7,7 @@
     "css-compile": "node-sass static/scss -o static/css",
     "css-watch": "node-sass static/scss -o static/css --watch",
     "browser-sync": "browser-sync start --files \"static/css/*.css, static/js/*.js, **/*.py, templates/**/*.html\" --proxy 127.0.0.1:8000 --reload-delay=300 --reload-debounce=500",
-    "start": "concurrently --kill-others \"npm run css-watch\" \"python manage.py runserver\" \"npm run browser-sync\" "
+    "start": "concurrently --kill-others \"python manage.py runserver\" \"npm run browser-sync\" "
   },
   "author": "Sando",
   "license": "ISC",
