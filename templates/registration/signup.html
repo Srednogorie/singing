@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero is-primary is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+          <form action="" class="box" method="POST">{% csrf_token %}
+            <div id="login-error">
+                {{ form.non_field_errors }}
+            </div>
+            <div class="field">
+              <label for="" class="label">Username</label>
+              <div class="control has-icons-left">
+                <input class="input" type="text" placeholder="e.g. mafia" name="username" required id="id_username" maxlength="254" autocomplete="username">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">First Name</label>
+              <div class="control has-icons-left">
+                <input class="input" type="text" placeholder="e.g. Luben" name="first_name" required id="id_first_name" maxlength="254" autocomplete="first_name">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">Last Name</label>
+              <div class="control has-icons-left">
+                <input class="input" type="text" placeholder="e.g. Gocev" name="last_name" required id="id_last_name" maxlength="254" autocomplete="last_name">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">Email</label>
+              <div class="control has-icons-left">
+                <input class="input" type="email" placeholder="e.g. lgocev@ubo.ds" name="email" required id="id_email" maxlength="254" autocomplete="email">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">Password</label>
+              <div class="control has-icons-left">
+                <input class="input" type="password" placeholder="*******" name="password1" required id="id_password1" autocomplete="new-password">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">Password confirmation</label>
+              <div class="control has-icons-left">
+                <input class="input" type="password" placeholder="*******" name="password2" required id="id_password2" autocomplete="new-password">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <button class="button is-success">
+                Sign up
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

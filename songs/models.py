@@ -15,6 +15,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    avatar = models.ImageField(upload_to='profile_pics/', blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -27,6 +28,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class Song(models.Model):
     name = models.CharField(max_length=200)
+    band = models.CharField(max_length=200)
     lyrics = models.TextField()
     video = EmbedVideoField()
     created = models.DateTimeField(auto_now_add=True)

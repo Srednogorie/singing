@@ -2,19 +2,47 @@
 {% load embed_video_tags %}
 
 {% block content %}
-  <section class="section">
+<section class="hero is-fullheight is-primary is-bold" id="section01">
+  <div class="hero-body">
     <div class="container">
       <h1 class="title">
-        Hello World
+        Who sings evil does not think
       </h1>
-      <p class="subtitle">
-        My first website with <strong>Bulma</strong>!
-      </p>
-        <form method="POST">{% csrf_token %}
-            <input>
-        </form>
+      <h2 class="subtitle">
+        Primary bold subtitle
+      </h2>
     </div>
-  </section>
+  </div>
+  <a href="#section02"><span></span>Scroll</a>
+</section>
+
+<section>
+<div class="tile is-ancestor">
+  <div class="tile is-parent">
+    <article class="tile is-child box">
+      <p class="title">Hello World</p>
+      <p class="subtitle">What is up?</p>
+    </article>
+  </div>
+  <div class="tile is-parent">
+    <article class="tile is-child box">
+      <p class="title">Foo</p>
+      <p class="subtitle">Bar</p>
+    </article>
+  </div>
+  <div class="tile is-parent">
+    <article class="tile is-child box">
+      <p class="title">Third column</p>
+      <p class="subtitle">With some content</p>
+      <div class="content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+      </div>
+    </article>
+  </div>
+</div>
+</section>
+
+<section id="section02">
     {% for song in object_list %}
         {{ song.name }}
         {% video song.video as my_video %}
@@ -22,4 +50,15 @@
             {% video my_video '800x600' %}
         {% endvideo %}
     {% endfor %}
+</section>
+
+<script>
+$(function() {
+    $('a[href*=#]').on('click', function(e) {
+        e.preventDefault();
+    $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
+    });
+});
+</script>
+
 {% endblock content %}

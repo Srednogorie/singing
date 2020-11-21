@@ -1,39 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{#{{ form }}#}
-<form action="" method="POST">{% csrf_token %}
-    <div id="login-error">
-        {{ form.non_field_errors }}
+<section class="hero is-primary is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+          <form action="" class="box" method="POST">{% csrf_token %}
+            <div id="login-error">
+                {{ form.non_field_errors }}
+            </div>
+            <div class="field">
+              <label for="" class="label">Email</label>
+              <div class="control has-icons-left">
+                <input class="input" type="email" placeholder="e.g. bobsmith@gmail.com" name="username" required id="id_username" maxlength="254" autocomplete="email">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">Password</label>
+              <div class="control has-icons-left">
+                <input class="input" type="password" placeholder="*******" name="password" required id="id_password" autocomplete="current-password">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="checkbox">
+                <input type="checkbox">
+               Remember me
+              </label>
+            </div>
+            <div class="field">
+              <button class="button is-success">
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <p class="control has-icons-left has-icons-right">
-        <input class="input" type="email" placeholder="Email" name="username"
-               required id="id_username" maxlength="254" autocomplete="email">
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
-        <span class="icon is-small is-right">
-          <i class="fas fa-check"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control has-icons-left">
-        <input class="input" type="password" placeholder="Password" name="password"
-               required id="id_password" autocomplete="current-password">
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control">
-        <button class="button is-success">
-          Login
-        </button>
-      </p>
-    </div>
-</form>
+  </div>
+</section>
 
 {% endblock content %}

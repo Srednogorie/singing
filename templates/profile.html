@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<section class="hero is-primary is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-6-tablet is-6-desktop is-7-widescreen">
+          <figure class="image is-128x128 is-center">
+            {% if user.avatar %}
+                <img class="is-rounded" src="{{user.avatar.url}}">
+            {% else %}
+                <img class="is-rounded" src="{% static 'images/missing_avatar.png' %}">
+            {% endif %}
+          </figure>
+          <form class="control" action="" class="box" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+            <div id="login-error">
+                {{ form.non_field_errors }}
+            </div>
+            <div class="field">
+              <label for="" class="label">Username</label>
+              <div class="control has-icons-left">
+                <input value="{{ form.username.value }}" class="input" type="text" name="username" required id="id_username" maxlength="254" autocomplete="username">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">First Name</label>
+              <div class="control has-icons-left">
+                <input value="{{ form.first_name.value }}" class="input" type="text" placeholder="e.g. Luben" name="first_name" required id="id_first_name" maxlength="254" autocomplete="first_name">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">Last Name</label>
+              <div class="control has-icons-left">
+                <input value="{{ form.last_name.value }}" class="input" type="text" placeholder="e.g. Gocev" name="last_name" required id="id_last_name" maxlength="254" autocomplete="last_name">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div id="profile-image" class="file has-name field">
+              <label class="file-label">
+                <input class="file-input" type="file" name="avatar" id="id_avatar" accept="image/*">
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label">
+                    Choose a file…
+                  </span>
+                </span>
+                <span class="file-name">
+                    No file uploaded
+                </span>
+              </label>
+            </div>
+            <div class="field">
+              <button class="button is-success">
+                Update Profile
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  const fileInput = document.querySelector('#profile-image input[type=file]');
+  fileInput.onchange = () => {
+    if (fileInput.files.length > 0) {
+      const fileName = document.querySelector('#profile-image .file-name');
+      fileName.textContent = fileInput.files[0].name;
+    }
+  }
+</script>
+{% endblock content %}
