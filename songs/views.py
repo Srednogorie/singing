@@ -1,7 +1,7 @@
 # Create your views here.
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from songs.forms import SignUpForm, UserProfileForm
 from songs.models import Song, CustomUser
@@ -14,6 +14,11 @@ class SongListView(ListView):
         if self.request.user.is_authenticated:
             return Song.objects.all()
         return Song.objects.order_by('-created')[:5]
+
+
+class SongDetailView(DetailView):
+    template_name = 'song_detail.html'
+    model = Song
 
 
 def signup(request):

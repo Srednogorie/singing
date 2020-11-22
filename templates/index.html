@@ -16,40 +16,57 @@
   <a href="#section02"><span></span>Scroll</a>
 </section>
 
-<section>
-<div class="tile is-ancestor">
-  <div class="tile is-parent">
-    <article class="tile is-child box">
-      <p class="title">Hello World</p>
-      <p class="subtitle">What is up?</p>
-    </article>
-  </div>
-  <div class="tile is-parent">
-    <article class="tile is-child box">
-      <p class="title">Foo</p>
-      <p class="subtitle">Bar</p>
-    </article>
-  </div>
-  <div class="tile is-parent">
-    <article class="tile is-child box">
-      <p class="title">Third column</p>
-      <p class="subtitle">With some content</p>
-      <div class="content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-      </div>
-    </article>
-  </div>
-</div>
-</section>
+<section id="section02" class="hero is-fullheight">
+    <div class="has-text-centered">
+        <h1 class="title">Latest five songs - lets sing!</h1>
+        <h2 class="subtitle">
+            To add your favorite songs or listen more, please
+            <a href="{% url 'login' %}">login</a> or
+            <a href="{% url 'signup' %}">register</a>
+        </h2>
+    </div>
 
-<section id="section02">
-    {% for song in object_list %}
-        {{ song.name }}
-        {% video song.video as my_video %}
-            <img src="{{ my_video.thumbnail }}">
-            {% video my_video '800x600' %}
-        {% endvideo %}
-    {% endfor %}
+    <div class="tile is-ancestor">
+      {% for song in object_list %}
+      <div class="tile is-parent">
+        <article class="tile is-child box media has-text-centered">
+{#            <article class="media">#}
+              <figure class="media-content">
+                <p class="image">
+                {% video song.video as my_video %}
+                    <img src="{{ my_video.thumbnail }}" style="width: 180px; height: 110px;">
+                {% endvideo %}
+                </p>
+              </figure>
+              <div class="media-content">
+                <div class="content">
+                  <p>
+                    <a href="{% url 'song_detail' song.pk %}">
+                        <strong>{{ song.band }}</strong>
+                    </a>
+                    <br>
+                    <small>{{ song.name }}</small>
+                    <br>
+                    <small>Added by: {{ song.author.username }}</small>
+                  </p>
+                </div>
+                <nav class="level is-mobile">
+                  <div class="level-left">
+                    <a class="level-item">
+                      <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                    </a>
+                  </div>
+                </nav>
+              </div>
+{#            </article>#}
+        </article>
+      </div>
+      {% if forloop.counter|divisibleby:3 %}
+          </div>
+          <div  class="tile is-ancestor">
+      {% endif %}
+      {% endfor %}
+    </div>
 </section>
 
 <script>
