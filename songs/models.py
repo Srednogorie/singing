@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from embed_video.fields import EmbedVideoField
 
 from .managers import CustomUserManager
@@ -33,8 +34,22 @@ class Song(models.Model):
     video = EmbedVideoField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    likes = models.IntegerField(default=0)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        self.lyrics = mark_safe(self.lyrics.replace("\n", "<br/>"))
+        super(Song, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
+
+
+class Like(models.Model):
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('song', 'user',)
+
+    def __str__(self):
+        return f'{self.song} - {self.user.email}'

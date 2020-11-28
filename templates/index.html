@@ -5,12 +5,9 @@
 <section class="hero is-fullheight is-primary is-bold" id="section01">
   <div class="hero-body">
     <div class="container">
-      <h1 class="title">
+      <h1 class="title" style="font-size: 4em">
         Who sings evil does not think
       </h1>
-      <h2 class="subtitle">
-        Primary bold subtitle
-      </h2>
     </div>
   </div>
   <a href="#section02"><span></span>Scroll</a>
@@ -18,9 +15,9 @@
 
 <section id="section02" class="hero is-fullheight">
     <div class="has-text-centered">
-        <h1 class="title">Latest five songs - lets sing!</h1>
+        <h1 class="title">Latest three songs - lets sing!</h1>
         <h2 class="subtitle">
-            To add your favorite songs or listen more, please
+            To add your favorite songs, listen more or like songs please
             <a href="{% url 'login' %}">login</a> or
             <a href="{% url 'signup' %}">register</a>
         </h2>
@@ -48,6 +45,8 @@
                     <small>{{ song.name }}</small>
                     <br>
                     <small>Added by: {{ song.author.username }}</small>
+                    <br>
+                    <small>Likes: {{ song.like_set.count }}</small>
                   </p>
                 </div>
                 <nav class="level is-mobile">
