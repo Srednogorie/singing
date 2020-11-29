@@ -4,26 +4,34 @@
 
 {% block content %}
 
-{% if user.is_authenticated and object.author == user%}
-<section id="video-detail" class="is-halfheight">
-<a href="{% url 'song-edit' object.pk %}" class="button is-info">Edit</a>
-<a href="{% url 'song-delete' object.pk %}" class="button is-danger">Delete</a>
-</section>
-{% endif %}
+<div class="container video-title">
+  <h1 class="title">{{ object.band }} - {{ object.name }}</h1>
+</div>
 
 <div class="columns">
-  <div class="column">
-    {% video object.video as my_video %}
-      {% video my_video "small" %}
-    {% endvideo %}
-  <p>Likes: {{ object.like_set.count }}</p>
-  {% if user.is_authenticated and object.author != user and not can_like %}
-      <a href="{% url 'like-song' object.pk %}">
-        <img src="{% static 'images/like.png' %}" alt="Like song" width="25" height="25">
-      </a>
-  {% endif %}
+  <div class="column" id="video_column">
+    {% if user.is_authenticated and object.author == user%}
+        <section id="video-detail" class="is-halfheight">
+            <a id="edit-btm" href="{% url 'song-edit' object.pk %}" class="button is-info">Edit</a>
+            <a id="delete-btn" href="{% url 'song-delete' object.pk %}" class="button is-danger">Delete</a>
+        </section>
+    {% endif %}
+    <div class="video-frame">
+        {% video object.video as my_video %}
+            {% video my_video "small" %}
+        {% endvideo %}
+    </div>
+    <div class="video-likes">
+      <span>Likes: {{ object.like_set.count }}</span>
+      {% if user.is_authenticated and object.author != user and not can_like %}
+          <a href="{% url 'like-song' object.pk %}">
+            <img src="{% static 'images/like.png' %}" alt="Like song" width="25" height="25">
+          </a>
+      {% endif %}
+    </div>
+
   </div>
-  <div class="column">
+  <div class="column" id="lyrics_column">
     {{ object.lyrics|safe|escape }}
   </div>
 </div>

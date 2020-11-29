@@ -1,5 +1,142 @@
+html *
+{
+    font-family: monospace, serif;
+}
+
 img {
     display: block;
     margin-left: auto;
     margin-right: auto
+}
+
+#lyrics_column {
+    max-height: 80vh;
+    overflow-y: auto;
+    margin-top: 20px;
+    font-family: fantasy, serif;
+}
+
+#video_column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#video-detail {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10%;
+}
+
+#video-detail > a {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#edit-btm {
+    background-color: #1ba1be;
+}
+
+.video-frame {
+    margin-bottom: 20px;
+    margin-right: 5px;
+}
+
+.video-likes {
+    display: flex;
+    justify-content: center;
+}
+
+.video-likes > span {
+    margin-right: 50px;
+}
+
+.video-title {
+    background-color: rgba(248, 207, 197, 0.3);
+    text-align: center;
+    margin: 10px;
+}
+
+.main-title {
+    font-family: fantasy;
+    color: #eea38e !important;
+    text-align: center;
+    font-weight: normal;
+}
+
+#section02 > div:first-of-type {
+    margin-top: 20px;
+}
+
+#section01 {
+    background-image: url("/static/images/lili.jpg");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    opacity: 0.5;
+}
+
+hr {
+    border-top: 1px solid;
+}
+
+
+.scroll-down {
+  opacity: 1;
+  -webkit-transition: all .5s ease-in 3s;
+  transition: all .5s ease-in 3s;
+}
+
+.scroll-down {
+  position: absolute;
+  bottom: -150px;
+  left: 50%;
+  margin-left: -16px;
+  display: block;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #eee8a9;
+  background-size: 14px auto;
+  border-radius: 50%;
+  z-index: 2;
+  -webkit-animation: bounce 2s infinite 2s;
+  animation: bounce 2s infinite 2s;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+}
+
+.scroll-down:before {
+    position: absolute;
+    top: calc(50% - 8px);
+    left: calc(50% - 6px);
+    transform: rotate(-45deg);
+    display: block;
+    width: 12px;
+    height: 12px;
+    content: "";
+    border: 2px solid #eee8a9;
+    border-width: 0px 0 2px 2px;
+}
+
+@keyframes bounce {
+  0%,
+  100%,
+  20%,
+  50%,
+  80% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-10px);
+    -ms-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+  60% {
+    -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
 }

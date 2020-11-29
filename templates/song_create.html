@@ -6,7 +6,7 @@
         <div class="field">
           <label for="id_name" class="label">Song Name</label>
           <div class="control has-icons-left">
-            <input class="input" value="{{ form.name.value }}" type="text" placeholder="Song name" name="name" required id="id_name" maxlength="254">
+            <input class="input" value="" type="text" placeholder="Song name" name="name" required id="id_name" maxlength="254">
             <span class="icon is-small is-left">
               <i class="fa fa-envelope"></i>
             </span>
@@ -15,7 +15,7 @@
         <div class="field">
           <label for="id_band" class="label">Band</label>
           <div class="control has-icons-left">
-            <input class="input" value="{{ form.band.value }}" type="text" placeholder="Band" name="band" required id="id_band" maxlength="254">
+            <input class="input" value="" type="text" placeholder="Band" name="band" required id="id_band" maxlength="254">
             <span class="icon is-small is-left">
               <i class="fa fa-envelope"></i>
             </span>
@@ -24,9 +24,7 @@
         <div class="field">
           <label for="id_lyrics" class="label">Lyrics</label>
           <div class="control has-icons-left">
-              <textarea class="textarea" placeholder="Band" name="lyrics" required id="id_lyrics">
-                  {{ form.lyrics.value|safe|escape }}
-              </textarea>
+              <textarea class="textarea" placeholder="Lyrics" name="lyrics" required id="id_lyrics" maxlength="254"></textarea>
             <span class="icon is-small is-left">
               <i class="fa fa-envelope"></i>
             </span>
@@ -35,7 +33,7 @@
         <div class="field">
           <label for="id_video" class="label">Video Link</label>
           <div class="control has-icons-left">
-            <input class="input" value="{{ form.video.value }}" type="text" placeholder="Band" name="video" required id="id_video" maxlength="254">
+            <input class="input" value="" type="text" placeholder="Video link" name="video" required id="id_video" maxlength="254">
             <span class="icon is-small is-left">
               <i class="fa fa-envelope"></i>
             </span>
@@ -43,21 +41,10 @@
         </div>
         <div class="field">
           <button class="button is-success">
-            Update
+            Create
           </button>
         </div>
     </form>
 </div>
-
-<script>
-    (function () {
-        const textarea = document.getElementById('id_lyrics');
-        const textarea_content = textarea.textContent;
-        textarea.textContent = textarea_content
-            .replaceAll('<br>', '')
-            .replaceAll('<br/>', '')
-            .trim();
-    })();
-</script>
 
 {% endblock content %}

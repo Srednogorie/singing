@@ -1,8 +1,8 @@
 # Create your views here.
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, DeleteView, UpdateView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 
 from songs.forms import SignUpForm, UserProfileForm
 from songs.models import Song, CustomUser, Like
@@ -42,9 +42,10 @@ class LatestSongDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(LatestSongDetailView, self).get_context_data(**kwargs)
-        context['can_like'] = Like.objects.filter(
-            user=self.request.user, song=context['song']
-        ).exists()
+        if self.request.user.is_authenticated:
+            context['can_like'] = Like.objects.filter(
+                user=self.request.user, song=context['song']
+            ).exists()
         return context
 
 
@@ -91,3 +92,12 @@ class SongUpdate(UpdateView):
     model = Song
     fields = ['name', 'band', 'lyrics', 'video']
     template_name = 'song_edit.html'
+
+    def get_success_url(self):
+        return reverse('song_detail', kwargs={'pk': self.kwargs['pk']})
+
+
+class SongCreate(CreateView):
+    model = Song
+    fields = ['name', 'band', 'lyrics', 'video']
+    template_name = 'song_create.html'

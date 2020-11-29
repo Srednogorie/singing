@@ -2,18 +2,19 @@
 {% load embed_video_tags %}
 
 {% block content %}
-<section class="hero is-fullheight is-primary is-bold" id="section01">
-  <div class="hero-body">
+<section class="hero is-fullheight is-bold" id="section01">
+  <div class="hero-body bg-img">
     <div class="container">
-      <h1 class="title" style="font-size: 4em">
+      <h1 class="title main-title" style="font-size: 4em">
         Who sings evil does not think
       </h1>
+      <a href="#section02" class="scroll-down" address="true"></a>
     </div>
   </div>
-  <a href="#section02"><span></span>Scroll</a>
 </section>
 
 <section id="section02" class="hero is-fullheight">
+    {% if not user.is_authenticated %}
     <div class="has-text-centered">
         <h1 class="title">Latest three songs - lets sing!</h1>
         <h2 class="subtitle">
@@ -22,42 +23,42 @@
             <a href="{% url 'signup' %}">register</a>
         </h2>
     </div>
+    <hr>
+    {% endif %}
 
     <div class="tile is-ancestor">
       {% for song in object_list %}
       <div class="tile is-parent">
         <article class="tile is-child box media has-text-centered">
-{#            <article class="media">#}
-              <figure class="media-content">
-                <p class="image">
-                {% video song.video as my_video %}
-                    <img src="{{ my_video.thumbnail }}" style="width: 180px; height: 110px;">
-                {% endvideo %}
-                </p>
-              </figure>
-              <div class="media-content">
-                <div class="content">
-                  <p>
-                    <a href="{% url 'song_detail' song.pk %}">
-                        <strong>{{ song.band }}</strong>
-                    </a>
-                    <br>
-                    <small>{{ song.name }}</small>
-                    <br>
-                    <small>Added by: {{ song.author.username }}</small>
-                    <br>
-                    <small>Likes: {{ song.like_set.count }}</small>
-                  </p>
-                </div>
-                <nav class="level is-mobile">
-                  <div class="level-left">
-                    <a class="level-item">
-                      <span class="icon is-small"><i class="fas fa-heart"></i></span>
-                    </a>
-                  </div>
-                </nav>
+          <figure class="media-content">
+            <p class="image">
+            {% video song.video as my_video %}
+                <img src="{{ my_video.thumbnail }}" style="width: 180px; height: 110px;">
+            {% endvideo %}
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <a href="{% url 'song_detail' song.pk %}">
+                    <strong>{{ song.band }}</strong>
+                </a>
+                <br>
+                <small>{{ song.name }}</small>
+                <br>
+                <small>Added by: {{ song.author.username }}</small>
+                <br>
+                <small>Likes: {{ song.like_set.count }}</small>
+              </p>
+            </div>
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <a class="level-item">
+                  <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                </a>
               </div>
-{#            </article>#}
+            </nav>
+          </div>
         </article>
       </div>
       {% if forloop.counter|divisibleby:3 %}
@@ -69,12 +70,19 @@
 </section>
 
 <script>
-$(function() {
-    $('a[href*=#]').on('click', function(e) {
-        e.preventDefault();
-    $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
-    });
-});
+const link = document.getElementsByClassName("scroll-down")[0];
+link.addEventListener("click", clickHandler);
+
+function clickHandler(e) {
+  e.preventDefault();
+  const href = this.getAttribute("href");
+  const offsetTop = document.querySelector(href).offsetTop;
+
+  scroll({
+    top: offsetTop,
+    behavior: "smooth"
+  });
+}
 </script>
 
 {% endblock content %}
