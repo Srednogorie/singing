@@ -1,3 +1,3 @@
 web: gunicorn singing.wsgi
-web: python manage.py collectstatic --noinput
+heroku config:set DISABLE_COLLECTSTATIC=1
 release: python manage.py migrate
