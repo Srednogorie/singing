@@ -2,49 +2,67 @@
 
 {% block content %}
 <div class="container">
-    <form method="post">{% csrf_token %}
-        <div class="field">
-          <label for="id_name" class="label">Song Name</label>
-          <div class="control has-icons-left">
-            <input class="input" value="" type="text" placeholder="Song name" name="name" required id="id_name" maxlength="254">
-            <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
+    <div class="columns is-centered">
+        <div class="column is-10-tablet is-8-desktop">
+            <form id="songCreateForm" method="post">{% csrf_token %}
+                <div class="field">
+                  <label for="id_name" class="label">Song Name</label>
+                  <div class="control has-icons-left">
+                    <input class="input" value="" type="text" placeholder="Song name" name="name" required id="id_name" maxlength="254">
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="id_band" class="label">Band</label>
+                  <div class="control has-icons-left">
+                    <input class="input" value="" type="text" placeholder="Band" name="band" required id="id_band" maxlength="254">
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="id_lyrics" class="label">Lyrics</label>
+                  <div class="control has-icons-left">
+                      <textarea style="min-height: 30vh" class="textarea" name="lyrics" required id="id_lyrics"
+                                placeholder="Lyrics
+For better experience please use already formatted lyrics.
+Example:
+
+Incy wincy spider
+climbed up the water spout,
+Down came the rain
+and washed poor Wincy out,
+
+Out came the sun shine
+and dried up all the rain,
+And Incy Wincy spider
+climbed up the spout again.
+                      "></textarea>
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="id_video" class="label">Video Link</label>
+                  <div class="control has-icons-left">
+                    <input class="input" value="" type="text" placeholder="Video link" name="video" required id="id_video" maxlength="254">
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <button class="button is-success">
+                    Create
+                  </button>
+                </div>
+            </form>
         </div>
-        <div class="field">
-          <label for="id_band" class="label">Band</label>
-          <div class="control has-icons-left">
-            <input class="input" value="" type="text" placeholder="Band" name="band" required id="id_band" maxlength="254">
-            <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-        <div class="field">
-          <label for="id_lyrics" class="label">Lyrics</label>
-          <div class="control has-icons-left">
-              <textarea class="textarea" placeholder="Lyrics" name="lyrics" required id="id_lyrics" maxlength="254"></textarea>
-            <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-        <div class="field">
-          <label for="id_video" class="label">Video Link</label>
-          <div class="control has-icons-left">
-            <input class="input" value="" type="text" placeholder="Video link" name="video" required id="id_video" maxlength="254">
-            <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-        <div class="field">
-          <button class="button is-success">
-            Create
-          </button>
-        </div>
-    </form>
+    </div>
 </div>
 
 {% endblock content %}

@@ -6,7 +6,8 @@ from django.views.generic import ListView, DetailView, DeleteView, UpdateView, C
 
 from songs.forms import SignUpForm, UserProfileForm
 from songs.models import Song, CustomUser, Like
-from django.http import Http404
+from django.http import Http404, JsonResponse
+from django.db import IntegrityError
 
 
 class LatestSongListView(ListView):
@@ -78,8 +79,11 @@ def user_profile(request, pk):
 
 def like_song(request, pk):
     song = Song.objects.get(pk=pk)
-    Like.objects.create(song=song, user=request.user)
-    return redirect('song_detail', pk)
+    try:
+        Like.objects.create(song=song, user=request.user)
+        return JsonResponse({"SUCCESS": "You liked this song."})
+    except IntegrityError:
+        return JsonResponse({"ERROR": "You cannot like a song multiple times."})
 
 
 class SongDelete(DeleteView):

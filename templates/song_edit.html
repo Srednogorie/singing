@@ -1,53 +1,76 @@
 {% extends 'base.html' %}
+{% load embed_video_tags %}
+
 
 {% block content %}
-<div class="container">
-    <form method="post">{% csrf_token %}
-        <div class="field">
-          <label for="id_name" class="label">Song Name</label>
-          <div class="control has-icons-left">
-            <input class="input" value="{{ form.name.value }}" type="text" placeholder="Song name" name="name" required id="id_name" maxlength="254">
-            <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-        <div class="field">
-          <label for="id_band" class="label">Band</label>
-          <div class="control has-icons-left">
-            <input class="input" value="{{ form.band.value }}" type="text" placeholder="Band" name="band" required id="id_band" maxlength="254">
-            <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-        <div class="field">
-          <label for="id_lyrics" class="label">Lyrics</label>
-          <div class="control has-icons-left">
-              <textarea class="textarea" placeholder="Band" name="lyrics" required id="id_lyrics">
-                  {{ form.lyrics.value|safe|escape }}
-              </textarea>
-            <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-        <div class="field">
-          <label for="id_video" class="label">Video Link</label>
-          <div class="control has-icons-left">
-            <input class="input" value="{{ form.video.value }}" type="text" placeholder="Band" name="video" required id="id_video" maxlength="254">
-            <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-        <div class="field">
-          <button class="button is-success">
-            Update
-          </button>
-        </div>
-    </form>
+{% video object.video as my_video %}
+<div class="container" id="songEdit">
+<div class="columns is-centered">
+    <div class="column is-10-tablet is-8-desktop">
+        <form method="post" style="min-width: 60%; margin-top: 50px; margin-left: auto; margin-right: auto">{% csrf_token %}
+            <div class="field">
+              <label for="id_name" class="label">Song Name</label>
+              <div class="control has-icons-left">
+                <input class="input" value="{{ form.name.value }}" type="text" placeholder="Song name" name="name" required id="id_name" maxlength="254">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="id_band" class="label">Band</label>
+              <div class="control has-icons-left">
+                <input class="input" value="{{ form.band.value }}" type="text" placeholder="Band" name="band" required id="id_band" maxlength="254">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="id_lyrics" class="label">Lyrics</label>
+              <div class="control has-icons-left">
+                  <textarea class="textarea" placeholder="Band" name="lyrics" required id="id_lyrics" style="min-height: 30vh;">
+                      {{ form.lyrics.value|safe|escape }}
+                  </textarea>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="id_video" class="label">Video Link</label>
+              <div class="control has-icons-left">
+                <input class="input" value="{{ form.video.value }}" type="text" placeholder="Band" name="video" required id="id_video" maxlength="254">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <button class="button is-success">
+                Update
+              </button>
+            </div>
+        </form>
+    </div>
 </div>
+
+</div>
+
+<style>
+#songEdit {
+    min-height: 100vh;
+}
+#songEdit:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: url({{ my_video.thumbnail }}) no-repeat;
+    background-size: cover;
+    position: absolute;
+    opacity: 0.2;
+}
+</style>
 
 <script>
     (function () {
@@ -59,5 +82,5 @@
             .trim();
     })();
 </script>
-
+{% endvideo %}
 {% endblock content %}

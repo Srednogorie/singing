@@ -39,7 +39,8 @@ img {
 
 .video-frame {
     margin-bottom: 20px;
-    margin-right: 5px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .video-likes {
@@ -81,6 +82,23 @@ hr {
     border-top: 1px solid;
 }
 
+.delete-page {
+    min-height: 100vh;
+    display: flex;
+}
+
+.field.is-grouped {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#songCreateForm {
+    /*max-width: 60%;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
 
 .scroll-down {
   opacity: 1;

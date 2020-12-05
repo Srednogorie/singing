@@ -8,12 +8,17 @@
   <h1 class="title">{{ object.band }} - {{ object.name }}</h1>
 </div>
 
-<div class="columns">
+<div class="columns" style="min-height: 83vh">
   <div class="column" id="video_column">
     {% if user.is_authenticated and object.author == user%}
         <section id="video-detail" class="is-halfheight">
             <a id="edit-btm" href="{% url 'song-edit' object.pk %}" class="button is-info">Edit</a>
             <a id="delete-btn" href="{% url 'song-delete' object.pk %}" class="button is-danger">Delete</a>
+        </section>
+    {% else %}
+        <section id="video-detail" class="is-halfheight">
+            <a id="edit-btm" href="" class="button is-info" disabled="" style="display: none">Edit</a>
+            <a id="delete-btn" href="" class="button is-danger" disabled="" style="display: none">Delete</a>
         </section>
     {% endif %}
     <div class="video-frame">
@@ -22,9 +27,9 @@
         {% endvideo %}
     </div>
     <div class="video-likes">
-      <span>Likes: {{ object.like_set.count }}</span>
+      <span id="likeText">Likes: {{ object.like_set.count }}</span>
       {% if user.is_authenticated and object.author != user and not can_like %}
-          <a href="{% url 'like-song' object.pk %}">
+          <a href="#" id="likeIcon">
             <img src="{% static 'images/like.png' %}" alt="Like song" width="25" height="25">
           </a>
       {% endif %}
@@ -35,5 +40,22 @@
     {{ object.lyrics|safe|escape }}
   </div>
 </div>
-
+{% include 'song_confirm_delete.html' %}
+<script>
+const likeBtn = document.getElementById("likeIcon");
+const likeTxt = document.getElementById("likeText");
+const videoLikes = document.getElementsByClassName("video-likes");
+if (likeBtn) {
+    likeBtn.addEventListener("click", async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const numLikes = parseInt({{ object.like_set.count }}) + 1;
+        likeTxt.textContent = `Likes: ${numLikes}`;
+        videoLikes[0].removeChild(likeBtn);
+        const response = await fetch("{% url 'like-song' object.pk %}", {});
+        const resultMsg = await response.json();
+        console.log(resultMsg);
+    })
+}
+</script>
 {% endblock content %}

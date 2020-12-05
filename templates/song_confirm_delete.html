@@ -1,8 +1,47 @@
 {% extends 'base.html' %}
 
+{% block navbar %}
+{% endblock navbar %}
+
 {% block content %}
-    <form method="post">{% csrf_token %}
-        <p>Are you sure you want to delete "{{ object }}"?</p>
-        <input type="submit" value="Confirm">
-    </form>
+<div class="modal" id="deleteModal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="columns">
+        <div class="column delete-page">
+            <form action="{% url 'song-delete' object.pk %}" method="post" style="margin: auto; text-align: center;">{% csrf_token %}
+                <p style="color: #1ba1be">Are you sure you want to delete "{{ object }}"?</p>
+                <div class="field is-grouped">
+                  <div class="control">
+                    <button class="button is-danger">Delete</button>
+                  </div>
+                  <div class="control">
+                    <button id="modalCancel" class="button is-link is-light" name="cancel">Cancel</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<script>
+const modal = document.getElementById("deleteModal");
+const openBtn = document.getElementById("delete-btn");
+const modalCloseBtn = document.getElementById("modalCancel");
+const modalCloseX = document.getElementsByClassName("modal-close")[0];
+if (openBtn) {
+    openBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        modal.classList.add("is-active");
+    });
+    modalCloseBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        modal.classList.remove("is-active");
+    });
+    modalCloseX.addEventListener("click", () => {
+        modal.classList.remove("is-active");
+    });
+}
+</script>
 {% endblock content %}

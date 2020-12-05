@@ -10,7 +10,9 @@
   </head>
   <body>
   <div class="container">
-      {% include 'partials/navbar.html' %}
+      {% block navbar %}
+        {% include 'partials/navbar.html' %}
+      {% endblock navbar %}
       {% block content %}
 
       {% endblock content %}
