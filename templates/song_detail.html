@@ -57,5 +57,10 @@ if (likeBtn) {
         console.log(resultMsg);
     })
 }
+
+const videoFrame = document.querySelector("iframe");
+if (videoFrame) {
+    videoFrame.style.maxWidth = "100vw";
+}
 </script>
 {% endblock content %}
