@@ -1,13 +1,15 @@
 # Create your views here.
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db import IntegrityError
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 
 from songs.forms import SignUpForm, UserProfileForm
 from songs.models import Song, CustomUser, Like
-from django.http import Http404, JsonResponse
-from django.db import IntegrityError
 
 
 class LatestSongListView(ListView):
@@ -65,18 +67,20 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-def user_profile(request, pk):
-    user = CustomUser.objects.get(pk=pk)
+@login_required(login_url='/accounts/login/')
+def user_profile(request):
+    user = CustomUser.objects.get(pk=request.user.pk)
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('user-profile', pk=pk)
+            return redirect('user-profile')
     else:
         form = UserProfileForm(instance=user)
     return render(request, 'profile.html', {'form': form})
 
 
+@login_required(login_url='/accounts/login/')
 def like_song(request, pk):
     song = Song.objects.get(pk=pk)
     try:
@@ -86,22 +90,41 @@ def like_song(request, pk):
         return JsonResponse({"ERROR": "You cannot like a song multiple times."})
 
 
-class SongDelete(DeleteView):
+class SongDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Song
     success_url = reverse_lazy('index')
     template_name = 'song_confirm_delete.html'
 
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
 
-class SongUpdate(UpdateView):
+
+class SongUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Song
-    fields = ['name', 'band', 'lyrics', 'video']
+    fields = ('name', 'band', 'lyrics', 'video')
     template_name = 'song_edit.html'
 
     def get_success_url(self):
         return reverse('song_detail', kwargs={'pk': self.kwargs['pk']})
 
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
 
-class SongCreate(CreateView):
+
+class SongCreate(LoginRequiredMixin, CreateView):
     model = Song
     fields = ['name', 'band', 'lyrics', 'video']
     template_name = 'song_create.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(SongCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('song_detail', kwargs={'pk': self.object.pk})
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user

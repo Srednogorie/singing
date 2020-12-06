@@ -36,11 +36,11 @@
     </div>
 
   </div>
-  <div class="column" id="lyrics_column">
-    {{ object.lyrics|safe|escape }}
-  </div>
+  <div class="column" id="lyrics_column">{{ object.lyrics|linebreaksbr }}</div>
 </div>
-{% include 'song_confirm_delete.html' %}
+{% if user.is_authenticated and object.author == user%}
+    {% include 'song_confirm_delete.html' %}
+{% endif %}
 <script>
 const likeBtn = document.getElementById("likeIcon");
 const likeTxt = document.getElementById("likeText");
@@ -49,7 +49,7 @@ if (likeBtn) {
     likeBtn.addEventListener("click", async (event) => {
         event.preventDefault();
         event.stopPropagation();
-        const numLikes = parseInt({{ object.like_set.count }}) + 1;
+        const numLikes = {{ object.like_set.count }} + 1;
         likeTxt.textContent = `Likes: ${numLikes}`;
         videoLikes[0].removeChild(likeBtn);
         const response = await fetch("{% url 'like-song' object.pk %}", {});

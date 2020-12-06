@@ -1,8 +1,7 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.db import models
 from django.utils import timezone
-from django.utils.safestring import mark_safe
 from embed_video.fields import EmbedVideoField
 
 from .managers import CustomUserManager
@@ -35,10 +34,6 @@ class Song(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-
-    def save(self, *args, **kwargs):
-        self.lyrics = mark_safe(self.lyrics.replace("\n", "<br/>"))
-        super(Song, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

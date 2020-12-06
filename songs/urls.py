@@ -1,12 +1,15 @@
 from django.conf import settings
-from django.urls import path
-from songs.views import LatestSongListView, signup, user_profile, LatestSongDetailView, like_song, SongDelete, \
-    SongUpdate, SongCreate
 from django.conf.urls.static import static
+from django.urls import path
+
+from songs.views import (
+    LatestSongListView, signup, user_profile, LatestSongDetailView, like_song,
+    SongDelete, SongUpdate, SongCreate
+)
 
 urlpatterns = [
     path('signup/', signup, name='signup'),
-    path('profile/<int:pk>', user_profile, name='user-profile'),
+    path('profile/', user_profile, name='user-profile'),
     path('songs/<int:pk>', LatestSongDetailView.as_view(), name='song_detail'),
     path('like_song/<int:pk>', like_song, name='like-song'),
     path('delete/<int:pk>', SongDelete.as_view(), name='song-delete'),

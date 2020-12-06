@@ -29,9 +29,7 @@
             <div class="field">
               <label for="id_lyrics" class="label">Lyrics</label>
               <div class="control has-icons-left">
-                  <textarea class="textarea" placeholder="Band" name="lyrics" required id="id_lyrics" style="min-height: 30vh;">
-                      {{ form.lyrics.value|safe|escape }}
-                  </textarea>
+                  <textarea class="textarea" placeholder="Band" name="lyrics" required id="id_lyrics" style="min-height: 30vh;">{{ form.lyrics.value|escape }}</textarea>
                 <span class="icon is-small is-left">
                   <i class="fa fa-envelope"></i>
                 </span>
@@ -71,16 +69,5 @@
     opacity: 0.2;
 }
 </style>
-
-<script>
-    (function () {
-        const textarea = document.getElementById('id_lyrics');
-        const textarea_content = textarea.textContent;
-        textarea.textContent = textarea_content
-            .replaceAll('<br>', '')
-            .replaceAll('<br/>', '')
-            .trim();
-    })();
-</script>
 {% endvideo %}
 {% endblock content %}
